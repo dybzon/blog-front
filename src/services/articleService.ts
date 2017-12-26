@@ -21,11 +21,9 @@ export class ArticleService {
 
     // Get a list of all article items for an article id
     public static GetArticleItems(store: Store, articleId: number) : void {
-        console.log("Now fetching article items for article: " + articleId);
         fetch(ArticleService.EndPoint + ArticleService.Operations.GetArticle + articleId)
             .then(response => response.json())
             .then(contents => {
-                console.log(contents);
                 const article: IArticle = contents as IArticle;
                 store.SetArticleItems(article.ArticleItems);
             });

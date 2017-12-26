@@ -23,7 +23,7 @@ export default class Menu extends React.Component<MenuProps> {
 
         const onClick = this.props.Store.SetArticle.bind(this.props.Store);
         const categories = this.props.MenuCategories.map((m, i) =>
-            (<MenuCategory MenuCategory={m} HandleOnClick={onClick} key={i} />));
+            (<MenuCategory Category={m} HandleOnClick={onClick} key={i} />));
 
         return (
             <MenuDiv>

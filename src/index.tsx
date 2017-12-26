@@ -25,8 +25,8 @@ class App extends React.Component{
     render() {
         const articleItems = this.store.currentArticleItems.map(ai => 
             ai.Type === ArticleItemType.Text ?
-            <Text Text={ai.Text} key={ai.Id} /> 
-            : <Code Code={ai.Text} key={ai.Id} />);
+            <Text Text={ai.Content} key={ai.Id} /> 
+            : <Code Code={ai.Content} key={ai.Id} />);
         
         const menuCategories: IMenuCategory[] = this.store.allMenuCategories;
 

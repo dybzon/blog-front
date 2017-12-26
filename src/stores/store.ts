@@ -59,15 +59,12 @@ export class Store {
 
     @action
     public SetArticle(articleId: number): void {
-        console.log("Reached store");
         this.currentArticleId = articleId;
-        console.log("Updated current article: " + this.currentArticleId);
         this.UpdateArticleItems();
     }
 
     @action
     public UpdateArticleItems(): void {
-        console.log("Attempting to update article items for article: " + this.currentArticleId);
         ArticleService.GetArticleItems(this, this.currentArticleId);
     }
 }

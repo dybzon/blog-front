@@ -1,6 +1,6 @@
 export interface IArticleItem {
     Id: number,
-    Text: string,
+    Content: string,
     Type: ArticleItemType,
 }
 

@@ -32,7 +32,7 @@ const codeFormatter = (code: string) : SpanElement[] => {
     ];
     var purpleReservedWords : string[] = [
         "NULLIF", "TRY_CONVERT", "TSEQUAL", "UPDATE", "CURRENT_USER", "CURRENT_TIMESTAMP", "CURRENT_TIME", "CONVERT", "SYSTEM_USER",
-        "SESSION_USER", "CONTAINS", "COLLATE", "COALESCE", "LEN",
+        "SESSION_USER", "CONTAINS", "COLLATE", "COALESCE", "LEN", "ISNULL", "POWER"
     ];
     var grayReservedWords : string[] = [
         "SOME", "ALL", "PIVOT", "EXISTS", "UNPIVOT", "OR", "OUTER", "CROSS", "LEFT", "LIKE", "NOT", "NULL", 
