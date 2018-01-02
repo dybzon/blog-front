@@ -11,6 +11,7 @@ var config = {
     output: {
         path: BUILD_DIR,
         filename: 'bundle.js',
+        // publicPath: ,
     },
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
@@ -18,8 +19,16 @@ var config = {
     },
     module: {
         rules: [
-            { test: /\.tsx?$/, loader: 'awesome-typescript-loader' }, // typescript and tsx
+            { test: /\.tsx?$/, use: ['awesome-typescript-loader'] }, // typescript and tsx
             { test: /\.css$/, use: ['style-loader', 'css-loader'] }, // styles
+            { test: /\.(eot|svg|otf|ttf|woff|woff2)$/, use: [{
+                loader: 'file-loader',
+                options: {
+                    name: '[name].[ext]',
+                    outputPath: 'webfonts',
+                    publicPath: '',
+                }
+            }]}, // fonts
         ]
     },
     plugins: [

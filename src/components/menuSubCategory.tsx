@@ -2,21 +2,33 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { IMenuCategory, IMenuSubCategory } from '../interfaces/menu';
 import MenuArticle from './menuArticle';
+import { Store } from '../stores/store';
+import { observer } from 'mobx-react';
+import { IDictionaryItem } from '../interfaces/dictionaryItem';
+import iconMapping from '../helpers/iconMapping';
 
 interface MenuSubCategoryProps {
     Category: IMenuCategory;
     SubCategory: IMenuSubCategory;
-    HandleOnClick: (id: number) => void;    
+    Store: Store;
 }
 
-const MenuSubCategory = (props: MenuSubCategoryProps) => {
+const MenuSubCategory = observer((props: MenuSubCategoryProps) => {
     const SubCategoryDiv = styled.div`
+        p {
+            margin: 0;
+            position: relative;
+            top: 50%;
+            left: 2%;
+            transform: translate(0%, -50%);                
+        }
+
         height: 40px;
         width: 100%;
         margin: 0 auto;
         text-align: left;
         border-bottom: 1px solid #8B9EB2;
-        background: #293949;
+        background: #4B6882;
         
         :hover {
             cursor: pointer;
@@ -32,19 +44,37 @@ const MenuSubCategory = (props: MenuSubCategoryProps) => {
         width: 100%;
         margin: 0 auto;
         text-align: left;
-        background: #293949;        
     `;
 
-    // Flatten everything for now (utilize the categorization later...)
-    const articles = props.SubCategory.Articles.map(a => 
-            (<MenuArticle HandleOnClick={props.HandleOnClick} Article={a} key={a.Id}/>));
+    const IconI = styled.i`
+        margin: 0;
+        position: relative;
+        top: 50%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+    `;
 
+    var iconClass: IDictionaryItem = iconMapping.find(i => i.key === props.SubCategory.SubCategory);
+    iconClass = iconClass ? iconClass : iconMapping.find(i => i.key === 'SubCategoryDefault');
+
+    // Get articles for the subcategory
+    const articles = props.SubCategory.IsActive ? props.SubCategory.Articles.map(a => 
+            (<MenuArticle Store={props.Store} Article={a} key={a.Id}/>))
+            : null;
+
+    const OnClick = () => {
+        props.Store.SetMenuSubCategoryState(props.Category, props.SubCategory, !props.SubCategory.IsActive)
+    };
+                    
     return (
         <SubCategoryContainerDiv>
-            <SubCategoryDiv>{props.SubCategory.SubCategory}</SubCategoryDiv>
+            <SubCategoryDiv onClick={OnClick}>
+                <p>{props.SubCategory.SubCategory}</p>
+                <IconI className={iconClass.name} aria-hidden="true" />
+            </SubCategoryDiv>
             {articles}            
         </SubCategoryContainerDiv>
     );
-};
+});
 
 export default MenuSubCategory;
