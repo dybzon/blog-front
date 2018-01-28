@@ -1,21 +1,14 @@
-import { observable, action, computed } from 'mobx';
+import { observable, action } from 'mobx';
 import { IArticleMeta } from '../interfaces/article';
-import { IArticleItem } from '../interfaces/articleItem';
 import { ArticleService } from '../services/articleService';
 import { IMenuCategory, IMenuSubCategory } from '../interfaces/menu';
 
-export class Store {
-    @observable public currentArticleId: number;
+export class MenuStore {
     @observable public allArticles: IArticleMeta[] = [];
-    @observable public currentArticleItems: IArticleItem[] = [];
     @observable public menuCategories: IMenuCategory[] = [];
 
     constructor() {
-        this.currentArticleId = 1;
         ArticleService.GetArticles(this);
-        ArticleService.GetArticleItems(this, this.currentArticleId);
-
-        this.SetArticle.bind(this);
     }
 
     @action
@@ -23,23 +16,6 @@ export class Store {
         this.allArticles.splice(0, this.allArticles.length);
         this.allArticles.push(...articles);
         this.updateMenuCategories();
-    }
-
-    @action
-    public SetArticleItems(articleItems: IArticleItem[]) : void {
-        this.currentArticleItems.splice(0, this.currentArticleItems.length);
-        this.currentArticleItems.push(...articleItems);
-    }
-
-    @action
-    public SetArticle(articleId: number): void {
-        this.currentArticleId = articleId;
-        this.UpdateArticleItems();
-    }
-
-    @action
-    public UpdateArticleItems(): void {
-        ArticleService.GetArticleItems(this, this.currentArticleId);
     }
 
     @action
@@ -63,6 +39,11 @@ export class Store {
     
     @action
     private updateMenuCategories(){
+        this.menuCategories.push(...this.articleCategories());
+    }
+
+    // Get all menucategories contained by the current articles
+    private articleCategories(): IMenuCategory[]{
         var menuCategories: IMenuCategory[] = [];
         this.allArticles.forEach(a => {
             var category: IMenuCategory = menuCategories.find(m => m.Category === a.Category);
@@ -88,6 +69,11 @@ export class Store {
             subCategory.Articles.push(a);
         });
 
-        this.menuCategories = menuCategories;
+        return menuCategories;
+    }
+
+    // Get all menucategories related to admin
+    private adminCategories(): IMenuCategory[]{
+        return [];
     }
 }

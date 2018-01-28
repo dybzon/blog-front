@@ -12,6 +12,7 @@ const Text = (props: TextProps) => {
         padding: 2px 4px;
         margin-bottom: 4px;
         color: #AEB2B7;
+        display: inline-block;
     `;
 
     return (

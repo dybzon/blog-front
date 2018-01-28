@@ -3,14 +3,14 @@ import styled from 'styled-components';
 import { IMenuCategory, IMenuSubCategory } from '../interfaces/menu';
 import { IArticleMeta } from '../interfaces/article';
 import MenuSubCategory from './menuSubCategory';
-import { Store } from '../stores/store';
+import { MenuStore } from '../stores/menuStore';
 import { observer } from 'mobx-react';
 import { IDictionaryItem } from '../interfaces/dictionaryItem';
 import iconMapping from '../helpers/iconMapping';
 
 interface MenuCategoryProps {
     Category: IMenuCategory;
-    Store: Store;    
+    MenuStore: MenuStore;
 }
 
 const MenuCategory = observer((props: MenuCategoryProps) => {
@@ -54,11 +54,11 @@ const MenuCategory = observer((props: MenuCategoryProps) => {
     `;
 
     const subCategories = props.Category.IsActive ? props.Category.SubCategories.map(
-        sc => (<MenuSubCategory Category={props.Category} SubCategory={sc} Store={props.Store} key={sc.SubCategory}/>))
+        sc => (<MenuSubCategory Category={props.Category} SubCategory={sc} MenuStore={props.MenuStore} key={sc.SubCategory}/>))
         : null;
 
     const OnClick = () => {
-        props.Store.SetMenuCategoryState(props.Category, !props.Category.IsActive)
+        props.MenuStore.SetMenuCategoryState(props.Category, !props.Category.IsActive)
     };
 
     var iconClass: IDictionaryItem = iconMapping.find(i => i.key === props.Category.Category);
@@ -68,7 +68,7 @@ const MenuCategory = observer((props: MenuCategoryProps) => {
         <MenuCategoryContainerDiv>
             <MenuCategoryDiv onClick={OnClick}>
                 <p>{props.Category.Category}</p>
-                <IconI className={iconClass.name} aria-hidden="true" />
+                <IconI className={iconClass.value} aria-hidden="true" />
             </MenuCategoryDiv>
             {subCategories}
         </MenuCategoryContainerDiv>

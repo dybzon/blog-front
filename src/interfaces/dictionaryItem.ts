@@ -1,4 +1,9 @@
 export interface IDictionaryItem {
     key: string;
-    name: string;
+    value: string;
+}
+
+export interface IDictionaryItemInt {
+    key: number;
+    value: string;
 }

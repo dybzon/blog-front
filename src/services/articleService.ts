@@ -1,6 +1,6 @@
 import { IArticleMeta, IArticle } from '../interfaces/article';
-import { IArticleItem } from '../interfaces/articleItem';
-import { Store } from '../stores/store';
+import { MenuStore } from '../stores/menuStore';
+import { ArticleStore } from '../stores/articleStore';
 
 export class ArticleService {
     private static EndPoint: String = "http://localhost:64248/"
@@ -9,8 +9,8 @@ export class ArticleService {
         GetArticle: "api/articles/"
     };
 
-    // Get a list of meta data for all articles
-    public static GetArticles(store: Store) : void {
+    // Get a list of meta data for all articles, and set it on the store
+    public static GetArticles(store: MenuStore) : void {
         fetch(ArticleService.EndPoint + ArticleService.Operations.GetArticles)
         .then(response => response.json())
         .then(contents => {
@@ -19,13 +19,13 @@ export class ArticleService {
         });
     }
 
-    // Get a list of all article items for an article id
-    public static GetArticleItems(store: Store, articleId: number) : void {
+    // Get all article data (including article items) for an article, and set it on the store
+    public static GetArticle(store: ArticleStore, articleId: number) : void {
         fetch(ArticleService.EndPoint + ArticleService.Operations.GetArticle + articleId)
             .then(response => response.json())
             .then(contents => {
                 const article: IArticle = contents as IArticle;
-                store.SetArticleItems(article.ArticleItems);
+                store.SetArticle(article);
             });
     }
 }

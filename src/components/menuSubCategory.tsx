@@ -2,7 +2,7 @@ import * as React from 'react';
 import styled from 'styled-components';
 import { IMenuCategory, IMenuSubCategory } from '../interfaces/menu';
 import MenuArticle from './menuArticle';
-import { Store } from '../stores/store';
+import { MenuStore } from '../stores/menuStore';
 import { observer } from 'mobx-react';
 import { IDictionaryItem } from '../interfaces/dictionaryItem';
 import iconMapping from '../helpers/iconMapping';
@@ -10,7 +10,7 @@ import iconMapping from '../helpers/iconMapping';
 interface MenuSubCategoryProps {
     Category: IMenuCategory;
     SubCategory: IMenuSubCategory;
-    Store: Store;
+    MenuStore: MenuStore;
 }
 
 const MenuSubCategory = observer((props: MenuSubCategoryProps) => {
@@ -59,18 +59,18 @@ const MenuSubCategory = observer((props: MenuSubCategoryProps) => {
 
     // Get articles for the subcategory
     const articles = props.SubCategory.IsActive ? props.SubCategory.Articles.map(a => 
-            (<MenuArticle Store={props.Store} Article={a} key={a.Id}/>))
+            (<MenuArticle Article={a} key={a.Id}/>))
             : null;
 
     const OnClick = () => {
-        props.Store.SetMenuSubCategoryState(props.Category, props.SubCategory, !props.SubCategory.IsActive)
+        props.MenuStore.SetMenuSubCategoryState(props.Category, props.SubCategory, !props.SubCategory.IsActive)
     };
                     
     return (
         <SubCategoryContainerDiv>
             <SubCategoryDiv onClick={OnClick}>
                 <p>{props.SubCategory.SubCategory}</p>
-                <IconI className={iconClass.name} aria-hidden="true" />
+                <IconI className={iconClass.value} aria-hidden="true" />
             </SubCategoryDiv>
             {articles}            
         </SubCategoryContainerDiv>

@@ -1,13 +1,12 @@
 import * as React from 'react';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { IArticleMeta } from '../interfaces/article';
-import { Store } from '../stores/store';
 import { IDictionaryItem } from '../interfaces/dictionaryItem';
 import iconMapping from '../helpers/iconMapping';
 
 interface MenuArticleProps {
     Article: IArticleMeta;
-    Store: Store;
 }
 
 const MenuArticle = (props: MenuArticleProps) => {
@@ -17,7 +16,7 @@ const MenuArticle = (props: MenuArticleProps) => {
             position: relative;
             top: 50%;
             left: 2%;
-            transform: translate(0%, -50%);                
+            transform: translate(0%, -50%);
         }
 
         height: 40px;
@@ -48,17 +47,13 @@ const MenuArticle = (props: MenuArticleProps) => {
     var iconClass: IDictionaryItem = iconMapping.find(i => i.key === props.Article.Subject);
     iconClass = iconClass ? iconClass : iconMapping.find(i => i.key === 'ArticleDefault');
 
-    const OnClick: (event: React.MouseEvent<HTMLElement>) => void =
-    (event: React.MouseEvent<HTMLElement>) => {
-        const articleId: number = props.Article.Id;
-        props.Store.SetArticle(articleId);
-    }
-
     return (
-        <MenuArticleDiv onClick={OnClick} id={props.Article.Id.toString()}>
-            <p>{props.Article.Subject}</p>
-            <IconI className={iconClass.name} aria-hidden="true" />
-        </MenuArticleDiv>
+        <Link to={'/article/' + props.Article.Id}>
+            <MenuArticleDiv id={props.Article.Id.toString()}>
+                <p>{props.Article.Subject}</p>
+                <IconI className={iconClass.value} aria-hidden="true" />
+            </MenuArticleDiv>
+        </Link>
     );
 }
 

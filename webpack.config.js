@@ -11,7 +11,6 @@ var config = {
     output: {
         path: BUILD_DIR,
         filename: 'bundle.js',
-        // publicPath: ,
     },
     resolve: {
         // Add '.ts' and '.tsx' as resolvable extensions.
@@ -34,11 +33,11 @@ var config = {
     plugins: [
         new CleanWebpackPlugin(['dist']), // Clean the dist folder before each build
         new HtmlWebpackPlugin({
-            title: 'Shush', // output page title
+            title: 'Sql Dybz', // output page title
             filename: 'index.html', // output file name
             template: APP_DIR + '/index.html' // template page file
         }),
-    ]
+    ],
 };
 
 module.exports = config;

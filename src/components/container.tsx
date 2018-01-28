@@ -9,7 +9,6 @@ export interface ContainerProps {
     children: any,
 };
 
-
 const Container = (props: ContainerProps) => {
     const ContainerDiv = styled.div`
         min-height: 100vh;
