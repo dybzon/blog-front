@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import { ArticleStore } from '../stores/articleStore';
 import { ArticleItemType } from '../interfaces/articleItem';
 import Text from './text';
+import Image from './image';
 import Code from './codeMirror';
 import ArticleHeader from './articleHeader';
 import ArticleFooter from './articleFooter';
@@ -60,7 +61,9 @@ export default class Article extends React.Component<ArticleProps, any> {
                 const articleItems = a.ArticleItems.map(ai => 
                     ai.Type === ArticleItemType.Text ?
                     <Text Text={ai.Content} key={ai.Id} /> 
-                    : <Code Code={ai.Content} key={ai.Id} />);
+                    : ai.Type === ArticleItemType.Code ? 
+                    <Code Code={ai.Content} key={ai.Id} />
+                    : <Image src="https://www.w3schools.com/howto/img_fjords.jpg" alt="image much wow!" height={600} width={800} key={ai.Id}/>);
                     
                 return (
                     <ArticleDiv>

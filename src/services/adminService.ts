@@ -2,7 +2,8 @@ import { IArticle } from '../interfaces/article';
 import { ArticleStore } from '../stores/articleStore';
 
 export class AdminService {
-    private static EndPoint: String = "http://localhost:64248/"
+    // private static EndPoint: String = "http://localhost:64248/"
+    private static EndPoint: String = "http://localhost:54917/"
     private static Operations: any = {
         SaveArticle: "api/admin/save"
     };

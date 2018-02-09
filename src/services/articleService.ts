@@ -3,7 +3,8 @@ import { MenuStore } from '../stores/menuStore';
 import { ArticleStore } from '../stores/articleStore';
 
 export class ArticleService {
-    private static EndPoint: String = "http://localhost:64248/"
+    // private static EndPoint: String = "http://localhost:64248/"
+    private static EndPoint: String = "http://localhost:54917/"    
     private static Operations: any = {
         GetArticles: "api/articles",
         GetArticle: "api/articles/"
@@ -12,7 +13,7 @@ export class ArticleService {
     // Get a list of meta data for all articles, and set it on the store
     public static GetArticles(store: MenuStore) : void {
         fetch(ArticleService.EndPoint + ArticleService.Operations.GetArticles)
-        .then(response => response.json())
+        .then(response => {const x = response.json(); console.log(x); return x})
         .then(contents => {
             const articles: IArticleMeta[] = contents as IArticleMeta[];
             store.SetArticles(articles);
